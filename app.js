@@ -10,13 +10,13 @@ Ext.application({
 
    
     var item1 = new Ext.Panel({
-                title: 'Adres Sorgula',
+                title: 'Adres Sorgula'/*,
                 html: '&lt;empty panel&gt;',
                 cls:'empty',
 				items:[{
 					xtype:'label',
 					html:'<p>denememe</p>'
-					}]
+					}]*/
             });
 
             var item2 = new Ext.Panel({
@@ -71,18 +71,18 @@ Ext.create('Ext.container.Viewport', {
 			accordion,
 			 {
 				 
-			    title: 'Katmanlar',
+			     title: 'Katmanlar',
 				collapsible:true,
 				height:300,
 				xtype:'panel',
 				items:[{
 					xtype:'deneme',
-					html:'<p>label one</p>'
-					},
+					//html:'<p>label one</p>'
+					}/*,
 					{
 					xtype:'label',
 					html:'<p>deneme 2</p>'
-					}]
+					}*/]
 		    }
 			]
 			
@@ -140,18 +140,18 @@ bounds = new OpenLayers.Bounds(404000.0368856075,4541290.715344564,407548.500614
 			    };
      map = new OpenLayers.Map('map',options);
 	 		
-	  wms = new OpenLayers.Layer.WMS("rrrr", "http://localhost:8081/geoserver/gungoren_ilce/wms",
+	  wms = new OpenLayers.Layer.WMS("rrrr", "http://localhost:8082/geoserver/SilBastan/wms",
                 {      
-                        LAYERS: 'gungoren_ilce:ilce',
+                        LAYERS: 'SilBastan:ilce',
 						 transparent: true,
 						 tiled: true
 						},
 						{isBaseLayer: true}
             );
 			
-	  wms1 = new OpenLayers.Layer.WMS("gungoren_ilce:ilce - Tiled", "http://localhost:8081/geoserver/gungoren_ilce/wms",
+	  wms1 = new OpenLayers.Layer.WMS("SilBastan:ilce - Tiled", "http://localhost:8082/geoserver/SilBastan/wms",
                 {      
-                        LAYERS: 'gungoren_ilce:Mahalle, gungoren_ilce:Yol, gungoren_ilce:Yapi',
+                        LAYERS: 'SilBastan:mahalle, SilBastan:yol, SilBastan:yapi',
 						 transparent: true, 
 						 tiled: true
 						},
