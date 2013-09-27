@@ -1,10 +1,22 @@
-/*global Ext:false */
-Ext.onReady(function() {
+
+Ext.application({
+		requires:['Ext.container.Viewport'],		
+		name:'Gungoren',
+		appFolder:'app',
+		controllers: ['katman_control'],
+		launch:function()
+			{
+
+
    
     var item1 = new Ext.Panel({
                 title: 'Adres Sorgula',
                 html: '&lt;empty panel&gt;',
-                cls:'empty'
+                cls:'empty',
+				items:[{
+					xtype:'label',
+					html:'<p>denememe</p>'
+					}]
             });
 
             var item2 = new Ext.Panel({
@@ -40,13 +52,13 @@ Ext.onReady(function() {
    
 Ext.create('Ext.container.Viewport', {
         layout: 'border',
-        items: [{
+        items: [/*{
             region: 'north',
 			height:40,
             html: '<div style=""><h1 class="x-panel-header" style="background-color: rgb(231, 236, 241);text-align: center;font-size: 25px;padding: 0px 14px 0px 0px;height: 69px;margin-top: 0px;color: darkblue;">Gungoren Belediyesi Cografi Bilgi Sistemi</h1></div>',
             border: false,
             margins: '0 0 0 0'
-        },
+        },*/
 		{
             region: 'east',
             title: 'Bilgilendirme',
@@ -62,8 +74,16 @@ Ext.create('Ext.container.Viewport', {
 			    title: 'Katmanlar',
 				collapsible:true,
 				height:300,
-                html: '<div >asdasdasdasdasd</div>'
-            }
+				xtype:'panel',
+				items:[{
+					xtype:'deneme',
+					html:'<p>label one</p>'
+					},
+					{
+					xtype:'label',
+					html:'<p>deneme 2</p>'
+					}]
+		    }
 			]
 			
         }
@@ -86,14 +106,13 @@ Ext.create('Ext.container.Viewport', {
 
         }, {
             region: 'center',
-            xtype: 'tabpanel',
-            // TabPanel itself has no title
-            activeTab: 0,
-            // First tab active by default
-            items: {
-                title: 'Default Tab',
-                html: '<div id="map" name="map" style="width: 1300px;background-color: rgb(231, 240, 245);height: 520px;"></div>'
-            }
+            layout: 'absolute',
+items:[{
+    title: 'Gungoren Belediyesi Cografi Bilgi Sistemi',
+    x: 0,
+    y: 0,
+     html: '<div id="map" name="map" style="width: 1300px;background-color: rgb(231, 240, 245);height: 580px;"></div>'
+}]
         }]
     });
 			
@@ -148,5 +167,5 @@ bounds = new OpenLayers.Bounds(404000.0368856075,4541290.715344564,407548.500614
 		map.zoomToMaxExtent();
 		//updateFormats();
 	
-	
+			}
 });
