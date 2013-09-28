@@ -1,22 +1,46 @@
 //DENEME AMACLI YAZILMIŞTIR
-Ext.application({
+var anasayfa;
+var map;
+ anasayfa= Ext.application({
 		requires:['Ext.container.Viewport'],		
 		name:'Gungoren',
 		appFolder:'app',
-		controllers: ['katman_control'],
+		controllers: ['katman_control','sorgu_control'],
 		launch:function()
 			{
+
+ 
+    var sorgulama = new Ext.Panel({
+        //      title: 'Adres Sorgula',
+                cls:'empty',
+				layout:'absolute',
+				height:134,
+				margin:'0 0 0 1',
+				width:222,
+				items:[{
+					x:10,
+					y:20,
+					xtype:'combox_mah'
+					},
+					{
+					x:10,
+					y:50,	
+					xtype:'combo_sok'
+					},{
+					x:10,
+					y:80,	
+					xtype:'combox_kapno'
+					}
+					]
+            });
 
 
    
     var item1 = new Ext.Panel({
-                title: 'Adres Sorgula'/*,
-                html: '&lt;empty panel&gt;',
+                title: 'Adres Sorgula',
                 cls:'empty',
-				items:[{
-					xtype:'label',
-					html:'<p>denememe</p>'
-					}]*/
+				//layout:'absolute',
+				items:[sorgulama]
             });
 
             var item2 = new Ext.Panel({
@@ -45,7 +69,7 @@ Ext.application({
 				title:'CBS Sorgulama',
                 split:true,
                 width: 230,
-				height:300,
+				height:270,
                 layout:'accordion',
                 items: [item1, item2, item3, item4]
             });
@@ -108,16 +132,16 @@ Ext.create('Ext.container.Viewport', {
             region: 'center',
             layout: 'absolute',
 items:[{
-    title: 'Gungoren Belediyesi Cografi Bilgi Sistemi',
+    title: 'Güngören Belediyesi Cografi Bilgi Sistemi',
     x: 0,
     y: 0,
-     html: '<div id="map" name="map" style="width: 1300px;background-color: rgb(231, 240, 245);height: 580px;"></div>'
+     html: '<div id="map" name="map" style="width: 1300px;background-color:white;height: 580px;"></div>'
 }]
         }]
     });
 			
 	
-var map=document.getElementById('map');
+map=document.getElementById('map');
 	var wms;
 	var wms1;
 	var bounds;
@@ -140,32 +164,85 @@ bounds = new OpenLayers.Bounds(404000.0368856075,4541290.715344564,407548.500614
 			    };
      map = new OpenLayers.Map('map',options);
 	 		
-	  wms = new OpenLayers.Layer.WMS("rrrr", "http://localhost:8082/geoserver/SilBastan/wms",
+	 wms = new OpenLayers.Layer.WMS("ilçe", "http://localhost:8081/geoserver/gungoren_ilce/wms",
                 {      
-                        LAYERS: 'SilBastan:ilce',
+                        LAYERS: 'gungoren_ilce:ilce',
 						 transparent: true,
 						 tiled: true
 						},
 						{isBaseLayer: true}
             );
 			
-	  wms1 = new OpenLayers.Layer.WMS("SilBastan:ilce - Tiled", "http://localhost:8082/geoserver/SilBastan/wms",
+	 wms1 = new OpenLayers.Layer.WMS("gungoren_ilce:ilce - Tiled", "http://localhost:8081/geoserver/gungoren_ilce/wms",
                 {      
-                        LAYERS: 'SilBastan:mahalle, SilBastan:yol, SilBastan:yapi',
+                        LAYERS: 'gungoren_ilce:Mahalle, gungoren_ilce:Yol, gungoren_ilce:Yapi',
 						 transparent: true, 
 						 tiled: true
 						},
 						{isBaseLayer: false}
             );
-			
 		vectors = new OpenLayers.Layer.Vector( "Vector Katmani" );	
 	    map.addLayers([wms,wms1,vectors]);
-      
-	    map.addControl(new OpenLayers.Control.LayerSwitcher());
-	
-		   
+       	map.addControl(new OpenLayers.Control.LayerSwitcher());
 		map.zoomToMaxExtent();
-		//updateFormats();
-	
-			}
-});
+		
+//Fonksiyon Başlangıcı	
+	Ext.define('Gungoren.util.Fonksiyon', 
+	{
+    singleton: true,
+   
+    wkt_atama: function(adres) 
+    {
+	        var features = formats['in']['wkt'].read(adres);
+		    var bounds;
+	    if(features) 
+		{
+             if(features.constructor != Array) 
+			 	{
+                    features = [features];
+                }
+			  for(var i=0; i<features.length; ++i) 
+			  {
+                    if (!bounds) 
+					{
+                        bounds = features[i].geometry.getBounds();
+                    } else {
+				        bounds.extend(features[i].geometry.getBounds());
+                		   }
+			  }
+			//Bir öncesini silme	
+			 vectors.removeFeatures(vectors.features[0]);
+		     vectors.addFeatures(features);
+		     map.zoomToExtent(bounds);
+	    } else {
+                element.value = 'Bad input ' + type;
+               }
+    },
+    wkt_update:function()
+    {
+	        var in_options = 
+			{
+                'internalProjection': map.baseLayer.projection
+            };   
+            var out_options = 
+			{
+                'internalProjection': map.baseLayer.projection
+            };
+            formats = 
+			{
+              'in': {
+                wkt: new OpenLayers.Format.WKT(in_options),
+                encoded_polyline: new OpenLayers.Format.EncodedPolyline(in_options)
+            	    },
+			  
+              'out': 
+			  		{
+                wkt: new OpenLayers.Format.WKT(out_options),
+                encoded_polyline: new OpenLayers.Format.EncodedPolyline(out_options)
+		            }
+            };
+    }
+    });//Burası Fonksiyon sonu
+
+			}//lounch fonk sonu
+});//application sonu
