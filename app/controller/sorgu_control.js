@@ -30,7 +30,7 @@ kapino_mekansal: function(secilen_kap_no)
 	{	
 	//alert(genel_sok_ad + "  " + genel_mah_id + "  " + secilen_kap_no.getValue() );
 	  	//Burası seçilen kapinumarasının mekansal konumunu getirecektir
-		Ext.Ajax.request
+		/*Ext.Ajax.request
 		({
 		    url: 'data/mekansal_sorgu/kapino.php',
 			type: 'json',
@@ -47,11 +47,15 @@ kapino_mekansal: function(secilen_kap_no)
 			var response = donen_data.responseText;
 		    response = response.replace('\n', '');
 			//alert(response);	
-				Gungoren.util.Fonksiyon.wkt_update();
+		Gungoren.util.Fonksiyon.wkt_update();
 		Gungoren.util.Fonksiyon.wkt_atama(response);
 	
 		    }
-		});
+		});*/
+		
+		Gungoren.util.Fonksiyon.wkt_update();
+		Gungoren.util.Fonksiyon.wkt_atama(secilen_kap_no.getValue());
+		
 	},
 sokak_sorgula: function(secilen_mah_id) 
 	{
@@ -102,11 +106,13 @@ sokak_sorgula: function(secilen_mah_id)
 	
 kapino_sorgula: function(sokak_adi) 
 	{
+		
 		genel_sok_ad=sokak_adi.getValue();
 		Ext.Ajax.request
 	({
     		url: 'data/kapino.php',
 			type: 'json',
+			
 		    params: 
 		{
         	sadi: sokak_adi.getValue(),
@@ -116,9 +122,11 @@ kapino_sorgula: function(sokak_adi)
 		
 		    success: function(donen_data) 
 		{
+			
 			var test = Ext.getStore("kapino");
 			var response = donen_data.responseText;
             response = response.replace('\n', '');
+		
             var jsonResponse = Ext.decode(response);
 			test.loadData(jsonResponse, false);
         }

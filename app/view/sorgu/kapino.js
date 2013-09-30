@@ -6,7 +6,7 @@ Ext.define('Gungoren.view.sorgu.kapino', {
         queryMode: 'local',
         displayField: 'kapi_no',
 		width:200,
-        valueField: 'kapi_no',
+        valueField: 'kapi_geom',
     //    renderTo: Ext.getBody(),
 	    store: 'kapino',
 		action:'kbox',

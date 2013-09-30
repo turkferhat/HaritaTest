@@ -4,10 +4,10 @@
 	$i=0;
 	$array=array();//json için dizi tanimladik
 	
-	$Gelen_Sokak_Ad    =  $_POST['sadi'];
-//$Gelen_Sokak_Ad    = "BEYATLI SOKAK";
+	//$Gelen_Sokak_Ad    =  $_POST['sadi'];
+$Gelen_Sokak_Ad    = "BEYATLI SOKAK";
 	 $sql =<<<EOF
-      SELECT kapi_no from kapino where yol_adi= '${Gelen_Sokak_Ad}' ;
+      SELECT  kapi_no,ST_AsText(geom) from kapino where yol_adi= '${Gelen_Sokak_Ad}' ;
 	  
 EOF;
 
@@ -21,6 +21,7 @@ EOF;
    while($row = pg_fetch_row($ret)){
    
        $array[$i]['kapi_no']=$row[0] ;
+	    $array[$i]['kapi_geom']=$row[1];
 	  $i=$i+1;
 	  
 	   }

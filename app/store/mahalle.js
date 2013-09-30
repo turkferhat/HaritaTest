@@ -9,7 +9,7 @@ Ext.define('Gungoren.store.mahalle',{
 		   proxy: {
     type: 'ajax',
 	url: 'data/mahalle.php',
-    extraParams: {'foo': '{"mah_adi":"baris uluzman"},'},
+   // extraParams: {'foo': '{"mah_adi":"baris uluzman"},'},
     api: {
         read: 'data/mahalle.php',
     },

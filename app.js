@@ -5,7 +5,7 @@ var map;
 		requires:['Ext.container.Viewport'],		
 		name:'Gungoren',
 		appFolder:'app',
-		controllers: ['katman_control','sorgu_control'],
+		controllers: ['katman_control','sorgu_control','bina_control','parsel_control'],
 		launch:function()
 			{
 
@@ -33,9 +33,37 @@ var map;
 					}
 					]
             });
-
+		 var bina_sorgu_form = new Ext.Panel({
+        //      title: 'Adres Sorgula',
+                cls:'empty',
+				layout:'absolute',
+				height:134,
+				margin:'0 0 0 1',
+				width:222,
+				items:[{
+					x:0,
+					y:0,
+					xtype:'bina_form'
+					}
+					]
+            });	
 
    
+    var parsel_sorgu_form = new Ext.Panel({
+        //      title: 'Adres Sorgula',
+                cls:'empty',
+				layout:'absolute',
+				height:134,
+				margin:'0 0 0 1',
+				width:222,
+				items:[{
+					x:0,
+					y:0,
+					xtype:'parsel_form'
+					}
+					]
+            });	
+			
     var item1 = new Ext.Panel({
                 title: 'Adres Sorgula',
                 cls:'empty',
@@ -45,14 +73,12 @@ var map;
 
             var item2 = new Ext.Panel({
                 title: 'Bina Sorgula',
-                html: '&lt;empty panel&gt;',
-                cls:'empty'
+               items:[bina_sorgu_form]
             });
 
             var item3 = new Ext.Panel({
                 title: 'Parsel Sorgula',
-                html: '&lt;empty panel&gt;',
-                cls:'empty'
+                items:[parsel_sorgu_form]
             });
 
             var item4 = new Ext.Panel({
@@ -88,7 +114,7 @@ Ext.create('Ext.container.Viewport', {
             title: 'Bilgilendirme',
 		//	collapsed:true,
             collapsible: true,
-            split: true,
+           // split: true,
             width: 230,
 			xtype:'panel',
 			items:[
@@ -131,11 +157,13 @@ Ext.create('Ext.container.Viewport', {
         }, {
             region: 'center',
             layout: 'absolute',
+			
 items:[{
     title: 'Güngören Belediyesi Cografi Bilgi Sistemi',
     x: 0,
     y: 0,
-     html: '<div id="map" name="map" style="width: 1300px;background-color:white;height: 580px;"></div>'
+	width:1200,
+     html: '<div id="map" name="map" style="width: 1200px;background-color:white;height: 580px;"></div>'
 }]
         }]
     });
@@ -215,7 +243,7 @@ bounds = new OpenLayers.Bounds(404000.0368856075,4541290.715344564,407548.500614
 		     vectors.addFeatures(features);
 		     map.zoomToExtent(bounds);
 	    } else {
-                element.value = 'Bad input ' + type;
+ //               element.value = 'Bad input ' + type;
                }
     },
     wkt_update:function()
@@ -241,7 +269,40 @@ bounds = new OpenLayers.Bounds(404000.0368856075,4541290.715344564,407548.500614
                 encoded_polyline: new OpenLayers.Format.EncodedPolyline(out_options)
 		            }
             };
-    }
+    },
+ajax_veri_cek:function(url,data1,data2)
+	{
+		Ext.Ajax.request
+		({
+		    url: url,
+			type: 'json',
+		    params: 
+			{
+        	id1:data1,
+			id2:data2,  
+		    },
+		    timeout: 3000,
+		    method: 'POST',
+		    success: function(donen_data) 
+			{
+				
+			var response = donen_data.responseText;
+		    response = response.replace('\n', '');
+			
+		//	alert(response + "dsdsdsds");
+			
+if(response=="")	{
+
+   Ext.Msg.alert('Sorgulama Sonucu', 'Girmiş olduğunuz değerler yanlış yada hatalı Lütfen Tekrar Deneyiniz');
+	
+	}	
+		Gungoren.util.Fonksiyon.wkt_update();
+		Gungoren.util.Fonksiyon.wkt_atama(response);
+	
+		    }
+		});
+	
+	}
     });//Burası Fonksiyon sonu
 
 			}//lounch fonk sonu

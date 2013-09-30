@@ -7,6 +7,6 @@ Ext.apply(Ext.data.AjaxProxy.prototype.actionMethods,
 Ext.define('Gungoren.store.kapino',
 	{
 	extend: 'Ext.data.Store',
-	fields: ['kapi_no'],
+	fields: ['kapi_no','kapi_geom'],
 	autoLoad: true, 
 	});
