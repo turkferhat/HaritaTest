@@ -192,18 +192,18 @@ bounds = new OpenLayers.Bounds(404000.0368856075,4541290.715344564,407548.500614
 			    };
      map = new OpenLayers.Map('map',options);
 	 		
-	 wms = new OpenLayers.Layer.WMS("ilçe", "http://localhost:8081/geoserver/gungoren_ilce/wms",
+	 wms = new OpenLayers.Layer.WMS("ilçe", "http://81.215.201.236:8081/geoserver/GungorenYeniWs/wms",
                 {      
-                        LAYERS: 'gungoren_ilce:ilce',
+                        LAYERS: 'GungorenYeniWs:ilce',
 						 transparent: true,
 						 tiled: true
 						},
 						{isBaseLayer: true}
             );
 			
-	 wms1 = new OpenLayers.Layer.WMS("gungoren_ilce:ilce - Tiled", "http://localhost:8081/geoserver/gungoren_ilce/wms",
+	 wms1 = new OpenLayers.Layer.WMS("gungoren_ilce:ilce - Tiled", "http://81.215.201.236:8081/geoserver/GungorenYeniWs/wms",
                 {      
-                        LAYERS: 'gungoren_ilce:Mahalle, gungoren_ilce:Yol, gungoren_ilce:Yapi',
+                        LAYERS: 'GungorenYeniWs:mahalle, GungorenYeniWs:yol, GungorenYeniWs:yapi',
 						 transparent: true, 
 						 tiled: true
 						},

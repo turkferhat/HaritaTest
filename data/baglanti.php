@@ -1,5 +1,5 @@
 <?php
-   $host        = "host=127.0.0.1";
+   $host        = "host=127.0.0.1";//Normalde 127.0.0.1
    $port        = "port=5432";
    $dbname      = "dbname=GungorenYeniDB";
    $credentials = "user=postgres password=anka";

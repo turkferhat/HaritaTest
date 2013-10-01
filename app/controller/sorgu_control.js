@@ -60,7 +60,7 @@ kapino_mekansal: function(secilen_kap_no)
 sokak_sorgula: function(secilen_mah_id) 
 	{
 		genel_mah_id=secilen_mah_id.getValue();//Burada sokak konum aramada kullanacağımız mahalle id si ataması yapılmıştır
-		
+	
 		Ext.Ajax.request
 		({
 		    url: 'data/sokak.php',
@@ -82,6 +82,7 @@ sokak_sorgula: function(secilen_mah_id)
 		    }
 		});
 		//Burası seçilen mahallenin mekansal konumunu getirecektir
+		
 		Ext.Ajax.request
 		({
 		    url: 'data/mekansal_sorgu/mahalle.php',
@@ -97,7 +98,7 @@ sokak_sorgula: function(secilen_mah_id)
 			var response = donen_data.responseText;
 		    response = response.replace('\n', '');
 			//alert(response);	
-				Gungoren.util.Fonksiyon.wkt_update();
+		Gungoren.util.Fonksiyon.wkt_update();
 		Gungoren.util.Fonksiyon.wkt_atama(response);
 	
 		    }
