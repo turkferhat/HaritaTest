@@ -1,4 +1,23 @@
 ﻿<?php
+	include('../baglanti.php');
+	
+	$array=array();//json için dizi tanimladik
+	
+	//$mid=  $_POST['id'];	
+	$mid= '430';
+	
+		$sth = $db->prepare("SELECT ST_AsText(geom) from mahalle where mahalle_id =?");
+$sth->execute( array($mid));
+$result = $sth->fetchAll(PDO::FETCH_BOTH);
+
+foreach($result as $row){
+
+	$array[]=$row[0] ;
+	
+	} 
+echo  $array[0];
+
+/*
 	include('baglanti.php');
 	$array=array();//json için dizi tanimladik
 	$mid=  $_POST['id'];	
@@ -17,5 +36,5 @@ EOF;
    {
       $array[]=$row[0] ;
    } 
-echo  $array[0];
+echo  $array[0];*/
 ?>
