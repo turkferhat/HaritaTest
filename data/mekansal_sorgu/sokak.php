@@ -1,31 +1,6 @@
 <?php
 	
-	include('../baglanti.php');
-	
-	$array=array();//json için dizi tanimladik
-	
-	$mah_id  =  $_POST['id'];
-	
-	$sok_ad  =  $_POST['sok_ad'];
-
-	//$mah_id  = '437';
-	
-	//$sok_ad  = 'HATEMİ SOKAK'; 
-	
-		$sth = $db->prepare("SELECT ST_AsText(geom) from yol where yol_ismi=? and mahalle_id =? ");
-$sth->execute( array($sok_ad,$mah_id));
-$result = $sth->fetchAll(PDO::FETCH_BOTH);
-
-foreach($result as $row){
-
-	$array[]=$row[0] ;
-	
-	} 
-echo  $array[0];
-
-	
-	
-/*	include('baglanti.php');
+	include('baglanti.php');
 	
 	$array=array();//json için dizi tanimladik
 	
@@ -55,5 +30,5 @@ EOF;
 	   }
 	 
 	echo  $array[0];
-*/
+
 ?>
